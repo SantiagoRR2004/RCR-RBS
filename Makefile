@@ -1,0 +1,2 @@
+activate:
+	prolog SBR.pl
