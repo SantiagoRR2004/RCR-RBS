@@ -15,4 +15,13 @@ add_pair(Key, Value) :-
     assert(pair(Key, NewValue)).  % Assert new pair
 
 
-final :- forall(pair(X, _), writef(X)).
+obtain_list(List) :- findall(pair(Key, Value), pair(Key, Value), List).
+
+
+
+
+
+final :- obtain_list(L).
+
+
+% forall(pair(X, _), writef(X))
