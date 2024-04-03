@@ -18,10 +18,30 @@ add_pair(Key, Value) :-
 obtain_list(List) :- findall(pair(Key, Value), pair(Key, Value), List).
 
 
+quicksort([], []).
+quicksort([Pivot | Tail], Sorted) :-
+    partition(Pivot, Tail, Smaller, Larger),
+    quicksort(Smaller, SortedSmaller),
+    quicksort(Larger, SortedLarger),
+    append(SortedLarger, [Pivot | SortedSmaller], Sorted).
+
+partition(_, [], [], []).
+partition(pair(PivotKey,PivotValue), [pair(Key2,Value2) | Xs], [pair(Key2,Value2) | Smaller], Larger) :-
+    Value2 =< PivotValue,
+    partition(pair(PivotKey,PivotValue), Xs, Smaller, Larger).
+
+partition(pair(PivotKey,PivotValue), [pair(Key2,Value2) | Xs], Smaller, [pair(Key2,Value2) | Larger]) :-
+    Value2 > PivotValue,
+    partition(pair(PivotKey,PivotValue), Xs, Smaller, Larger).
 
 
+printPairs([]).
 
-final :- obtain_list(L).
+printPairs([pair(Key, Value) | Tail]) :-
+    writef("%w: %w\n", [Key, Value]),
+    printPairs(Tail).
 
 
-% forall(pair(X, _), writef(X))
+final :- obtain_list(L), quicksort(L,R), printPairs(R), !.
+
+
