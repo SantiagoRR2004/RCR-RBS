@@ -3,7 +3,13 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+carrera_nota("Física", 11).
+carrera_nota("Matemáticas", 12).
+nota(X) :- forall(carrera_nota(C, N), (X>=N -> add_pair(C, 1) ; true)),
+           forall(carrera_nota(C, N), (X<N -> FinalN is X - N, add_pair(C, FinalN) ; true)).
+ciencias("Física") :- add_pair("Física", 1).
+ciencias("Matemáticas") :- add_pair("Matematicas", 1).
+letras("Filologia hispanica") :- add_pair("Filologia hispanica", 1).
 
 ciencias("Física") :- add_pair("Física", 1).
 
