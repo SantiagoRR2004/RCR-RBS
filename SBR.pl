@@ -3,15 +3,66 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-carrera_nota("Física", 11).
-carrera_nota("Matemáticas", 12).
-nota(X) :- forall(carrera_nota(C, N), (X>=N -> add_pair(C, 1) ; true)),
-           forall(carrera_nota(C, N), (X<N -> FinalN is X - N, add_pair(C, FinalN) ; true)).
-ciencias("Física") :- add_pair("Física", 1).
-ciencias("Matemáticas") :- add_pair("Matematicas", 1).
-letras("Filologia hispanica") :- add_pair("Filologia hispanica", 1).
+% Esto es para que sepa que carreras puede elegir con su nota
 
-ciencias("Física") :- add_pair("Física", 1).
+% Aquí ponemos las carreras y las notas de corte
+
+carrera_nota("Medicina", 12.690).
+carrera_nota("Comunicaciones y Periodismo", 12.372).
+carrera_nota("Matemáticas", 12.260).
+carrera_nota("Ingeniería Aeroespacial", 12.090).
+carrera_nota("Física",  11.760).
+carrera_nota("Ingeniería Informática",  11.106).
+carrera_nota("Relaciones Internacionales",  11.096).
+carrera_nota("Psicología",  10.942).
+carrera_nota("Enfermería",  10.932).
+carrera_nota("Biología",  10.330).
+carrera_nota("Ciencias de la Actividad Física y del Deporte",  9.740).
+carrera_nota("Educación Infantil",  9.186).
+carrera_nota("Historia",  8.980).
+carrera_nota("Ingeniería Mecánica",  8.940).
+carrera_nota("Filología Hispánica", 8.690).
+carrera_nota("Diseño", 8.442).
+carrera_nota("Derecho", 8.410).
+carrera_nota("Educación Social", 7.230).
+carrera_nota("Filosofía", 7.710).
+carrera_nota("Historia del Arte", 6.930).
+carrera_nota("Bellas Artes", 6.682).
+carrera_nota("Ciencia y Tecnología de los Alimentos", 6.514).
+carrera_nota("Administración y Dirección de Empresas", 6.278).
+carrera_nota("Economía", 6.080).
+carrera_nota("Filología Inglesa", 5.330).
+carrera_nota("Ciencias Políticas y de la Administración", 5.260). 
+carrera_nota("Turismo", 5.000).
+carrera_nota("Arquitectura", 5.000).
+
+% Si tiene más nota se le suma un punto
+% Si tiene menos nota se le resta la diferencia
+nota(X) :-
+    forall(carrera_nota(C, N),
+           (X >= N -> % Si la nota es mayor o igual a la de corte
+               add_pair(C, 1) % Añadimos un punto
+           ; 
+               true
+           )),
+    forall(carrera_nota(C, N),
+           (X < N -> % Si la nota es menor a la de corte
+               FinalN is X - N, % Restamos la diferencia
+               add_pair(C, FinalN)
+           ; 
+               true
+           )).
+% El forall itera sobre todas las carreras y notas de corte
+% Ponemos el true para que no haya un fallo si no se cumple la condición
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ciencias("Física") :- add_pair("Física", 1).
+% ciencias("Matemáticas") :- add_pair("Matematicas", 1).
+% letras("Filologia hispanica") :- add_pair("Filologia hispanica", 1).
+
+% ciencias("Física") :- add_pair("Física", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Esta es la parte en la que creamos las parejas o las actualizamos
