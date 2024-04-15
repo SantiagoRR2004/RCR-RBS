@@ -75,18 +75,20 @@ bachillerato("Letras") :- bachilleratoLetras(C), forall(member(X, C), add_pair(X
 bachillerato("Artes") :- bachilleratoArtes(C), forall(member(X, C), add_pair(X, 1)).
 bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pair(X, 1)).
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A más idiomas, darles más puntos.
 carreras_de_idiomas(["Filología inglesa", "Ciencias Políticas y de la Administración", "Turismo", "Filología Hispánica"]).
 idiomas(X) :-
     X > 2, carreras_de_idiomas(L), forall(member(C, L), add_pair(C, 1)), !.
 idiomas(_) :- true.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 resolver_problemas :- 
     add_pair("Matemáticas", 3), add_pair("Física", 3), add_pair("Ingenería Mecánica", 1), add_pair("Química", 1).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 curiosidad_tecnologica :- add_pair("Ingenería Mecánica", 1), add_pair("Ingenería Informática").
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 carreras_de_leer(["Filología Hispánica", "Filología Inglesa", "Filosofía"]).
 libros_al_mes(X) :- 
@@ -94,20 +96,31 @@ libros_al_mes(X) :-
 libros_al_mes(X) :-
     X>0, carreras_de_leer(L), forall(member(C, L), add_pair(C, 1)), !.
 libros_al_mes(_) :- true.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 carreras_de_memorizar(["Historia del Arte", "Historia", "Derecho", "Medicina", "Filosofía"]).
 memoria("buena") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, 1)).
 memoria("regular") :- true.
 memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1)).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 carreras_faciles(["Educación Infantil",  "Turismos", "Diseño", "Educación Social"]).
-carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar", "Educación Social"]).
+carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar"]).
 carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
 carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", "Arquitectura", "Química", "Relaciones Internacionales"]).
-carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"])
+carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"]).
 tiempo_estudio(X) :- 
-    X<=1, carreras_faciles(L), forall(member(C, L), add_pair(C, 3)), carreras_medio_facil(L), forall(member(C, L), add_pair(C, 1)),
-    carreras_medio_dificl(L), forall(member(C, L), add_pair(C, -1)), carreras_dificiles(L), forall(member(C, L), add_pair(C, -3)).
+    X<2, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 3)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
+    carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
+tiempo_estudio(X) :- 
+    X<4, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 2)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 3)),
+    carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -1)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
+tiempo_estudio(X) :- 
+    X<6, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 2)),
+    carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 3)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -1)), !.
+tiempo_estudio(X) :- 
+    X>5, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, -1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
+    carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, 3)), !.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
