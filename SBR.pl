@@ -24,12 +24,14 @@ carrera_nota("Ingeniería Mecánica",  8.940).
 carrera_nota("Filología Hispánica", 8.690).
 carrera_nota("Diseño", 8.442).
 carrera_nota("Derecho", 8.410).
-carrera_nota("Educación Social", 7.230).
+carrera_nota("Química", 7.790).
 carrera_nota("Filosofía", 7.710).
+carrera_nota("Educación Social", 7.230).
 carrera_nota("Historia del Arte", 6.930).
 carrera_nota("Bellas Artes", 6.682).
 carrera_nota("Ciencia y Tecnología de los Alimentos", 6.514).
 carrera_nota("Administración y Dirección de Empresas", 6.278).
+carrera_nota("Ciencias del mar", 6.150).
 carrera_nota("Economía", 6.080).
 carrera_nota("Filología Inglesa", 5.330).
 carrera_nota("Ciencias Políticas y de la Administración", 5.260). 
