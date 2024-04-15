@@ -57,14 +57,27 @@ nota(X) :-
 % El forall itera sobre todas las carreras y notas de corte
 % Ponemos el true para que no haya un fallo si no se cumple la condición
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Esto es por el tipo de bachillerato
+
+% cada tipo de bachillerato es un conjunto representado como una lista
+% Estos conjuntos no son disjuntos. Tienen elementos en común
+% Si haces 2 tipos de bachillerato las carreras en común contarán el doble
+bachilleratoCiencias(["Medicina", "Matemáticas", "Física", "Psicología", "Enfermería", "Biología", "Ciencias de la Actividad Física y del Deporte", "Química", "Ciencia y Tecnología de los Alimentos", "Ciencias del mar", "Economía", "Arquitectura"]).
+bachilleratoTech(["Matemáticas", "Física", "Ingeniería Aeroespacial", "Ingeniería Informática", "Ingeniería Mecánica", "Arquitectura"]).
+bachilleratoLetras(["Comunicaciones y Periodismo", "Filología Hispánica", "Filosofía", "Filología Inglesa"]).
+bachilleratoArtes(["Diseño", "Historia del Arte", "Bellas Artes", "Arquitectura"]).
+bachilleratoSociales(["Comunicaciones y Periodismo", "Relaciones Internacionales", "Educación Infantil", "Historia", "Derecho", "Filosofía", "Educación Social", "Historia del Arte", "Administración y Dirección de Empresas", "Economía", "Ciencias Políticas y de la Administración", "Turismo"]).
+
+bachillerato("Ciencias") :- bachilleratoCiencias(C), forall(member(X, C), add_pair(X, 1)).
+bachillerato("Tecnología") :- bachilleratoTech(C), forall(member(X, C), add_pair(X, 1)).
+bachillerato("Letras") :- bachilleratoLetras(C), forall(member(X, C), add_pair(X, 1)).
+bachillerato("Artes") :- bachilleratoArtes(C), forall(member(X, C), add_pair(X, 1)).
+bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pair(X, 1)).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% ciencias("Física") :- add_pair("Física", 1).
-% ciencias("Matemáticas") :- add_pair("Matematicas", 1).
-% letras("Filologia hispanica") :- add_pair("Filologia hispanica", 1).
-
-% ciencias("Física") :- add_pair("Física", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Esta es la parte en la que creamos las parejas o las actualizamos
