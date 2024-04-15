@@ -77,6 +77,38 @@ bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pa
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A más idiomas, darles más puntos.
+carreras_de_idiomas(["Filología inglesa", "Ciencias Políticas y de la Administración", "Turismo", "Filología Hispánica"]).
+idiomas(X) :-
+    X > 2, carreras_de_idiomas(L), forall(member(C, L), add_pair(C, 1)), !.
+idiomas(_) :- true.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+resolver_problemas :- 
+    add_pair("Matemáticas", 3), add_pair("Física", 3), add_pair("Ingenería Mecánica", 1), add_pair("Química", 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+curiosidad_tecnologica :- add_pair("Ingenería Mecánica", 1), add_pair("Ingenería Informática").
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_leer(["Filología Hispánica", "Filología Inglesa", "Filosofía"]).
+libros_al_mes(X) :- 
+    X>2, carreras_de_leer(L), forall(member(C, L), add_pair(C, 2)), !.
+libros_al_mes(X) :-
+    X>0, carreras_de_leer(L), forall(member(C, L), add_pair(C, 1)), !.
+libros_al_mes(_) :- true.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_memorizar(["Historia del Arte", "Historia", "Derecho", "Medicina", "Filosofía"]).
+memoria("buena") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, 1)).
+memoria("regular") :- true.
+memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_faciles(["Educación Infantil",  "Turismos", "Diseño", "Educación Social"]).
+carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar", "Educación Social"]).
+carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
+carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", "Arquitectura", "Química", "Relaciones Internacionales"]).
+carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"])
+tiempo_estudio(X) :- 
+    X<=1, carreras_faciles(L), forall(member(C, L), add_pair(C, 3)), carreras_medio_facil(L), forall(member(C, L), add_pair(C, 1)),
+    carreras_medio_dificl(L), forall(member(C, L), add_pair(C, -1)), carreras_dificiles(L), forall(member(C, L), add_pair(C, -3)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
