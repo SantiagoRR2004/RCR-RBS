@@ -69,11 +69,11 @@ bachilleratoLetras(["Comunicaciones y Periodismo", "Filología Hispánica", "Fil
 bachilleratoArtes(["Diseño", "Historia del Arte", "Bellas Artes", "Arquitectura"]).
 bachilleratoSociales(["Comunicaciones y Periodismo", "Relaciones Internacionales", "Educación Infantil", "Historia", "Derecho", "Filosofía", "Educación Social", "Historia del Arte", "Administración y Dirección de Empresas", "Economía", "Ciencias Políticas y de la Administración", "Turismo"]).
 
-bachillerato("Ciencias") :- bachilleratoCiencias(C), forall(member(X, C), add_pair(X, 1)).
-bachillerato("Tecnología") :- bachilleratoTech(C), forall(member(X, C), add_pair(X, 1)).
-bachillerato("Letras") :- bachilleratoLetras(C), forall(member(X, C), add_pair(X, 1)).
-bachillerato("Artes") :- bachilleratoArtes(C), forall(member(X, C), add_pair(X, 1)).
-bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pair(X, 1)).
+bachillerato("Ciencias") :- bachilleratoCiencias(C), forall(member(X, C), add_pair(X, 2)).
+bachillerato("Tecnología") :- bachilleratoTech(C), forall(member(X, C), add_pair(X, 2)).
+bachillerato("Letras") :- bachilleratoLetras(C), forall(member(X, C), add_pair(X, 2)).
+bachillerato("Artes") :- bachilleratoArtes(C), forall(member(X, C), add_pair(X, 2)).
+bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pair(X, 2)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A más idiomas, darles más puntos.
@@ -107,23 +107,57 @@ memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1
 carreras_faciles(["Educación Infantil",  "Turismos", "Diseño", "Educación Social"]).
 carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar"]).
 carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
-carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", "Arquitectura", "Química", "Relaciones Internacionales"]).
+carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", 
+    "Arquitectura", "Química", "Relaciones Internacionales"]).
 carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"]).
 tiempo_estudio(X) :- 
-    X<2, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 3)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
+    X<1, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 3)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
 tiempo_estudio(X) :- 
-    X<4, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 2)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 3)),
+    X<3, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 2)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 3)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -1)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
 tiempo_estudio(X) :- 
-    X<6, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 2)),
+    X<5, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 2)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 3)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -1)), !.
 tiempo_estudio(X) :- 
-    X>5, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, -1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
+    X>4, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, -1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, 3)), !.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+carreras_frente_publico(["Psicología", "Educación Infantil", "Turismo", "Medicina", "Enfermería", "Comunicaciones y Periodismo",
+    "Educación Social", "Relaciones Internacionales", "Ciencias de la Actividad Física y del Deporte"]).
+publico :- carreras_frente_publico(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_ayudar(["Psicología", "Educación Infantil", "Medicina", "Enfermería", "Educación Social","Ciencias de la Actividad Física y del Deporte"]).
+ayudar :- carreras_de_ayudar(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_apreciar_belleza(["Bellas Artes", "Historia del Arte", "Diseño"]).
+belleza :- carreras_de_apreciar_belleza(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_imaginacion(["Bellas Artes", "Diseño", "Arquitectura"]).
+imaginativo :- carreras_de_imaginacion(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_empatia(["Psicología", "Educación Infantil", "Enfermería", "Educación Social"]).
+empatico :- carreras_de_empatia(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_debate(["Economía", "Filosofía", "Comunicaciones y Periodismo", "Ciencias Políticas y de la Administración"]).
+debatir :- carreras_de_debate(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_ambicion(["Matemáticas", "Administración y Dirección de Empresas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Ciencias Políticas y de la Administración"]).
+ambicioso :- carreras_de_ambicion(L), forall(member(C, L), add_pair(C, 1)).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_educacion(["Matemáticas", "Físisca", "Educación Infantil", "Filología Hispánica", "Filología Inglesa", "Historia",
+    "Economía", "Química", "Educación Social", "Filosofía", "Biología"]).
+profesor :- carreras_de_educacion(L), forall(member(C, L), add_pair(C, 1)), add_pair("Educación Infantil", 1), add_pair("Educación Social", 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_actualidad(["Economía", "Filosofía", "Comunicaciones y Periodismo", "Ciencias Políticas y de la Administración"]).
+informado :- carreras_de_actualidad(L), forall(member(C, L), add_pair(C, 1)), add_pair("Educación Infantil", 1), add_pair("Educación Social", 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sano :- add_pair("Ciencias de la Actividad Física y del Deporte", 1), add_pair("Ciencia y Tecnología de los Alimentos", 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+independiente :- add_pair("Bellas Artes", 1), add_pair("Hisotria", 1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+carreras_de_laboratorio(["Física", "Química", "Biología"]).
+investigador :- carreras_de_laboratorio(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Esta es la parte en la que creamos las parejas o las actualizamos
 
