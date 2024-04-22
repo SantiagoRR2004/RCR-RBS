@@ -1,11 +1,11 @@
-% Si ponemos dynamic significa que podemos cambiar la base de conocimiento en tiempo de ejecución
+% Si ponemos dynamic significa que podemos cambiar la base de conocimiento en tiempo de ejecución.
 :- dynamic pair/2.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Esto es para que sepa que carreras puede elegir con su nota
+% Esto es para que sepa que carreras puede elegir con su nota.
 
-% Aquí ponemos las carreras y las notas de corte
+% Aquí ponemos las carreras y las notas de corte.
 
 carrera_nota("Medicina", 12.690).
 carrera_nota("Comunicaciones y Periodismo", 12.372).
@@ -38,8 +38,8 @@ carrera_nota("Ciencias Políticas y de la Administración", 5.260).
 carrera_nota("Turismo", 5.000).
 carrera_nota("Arquitectura", 5.000).
 
-% Si tiene más nota se le suma un punto
-% Si tiene menos nota se le resta la diferencia
+% Si tiene más nota se le suma un punto.
+% Si tiene menos nota se le resta la diferencia.
 nota(X) :-
     forall(carrera_nota(C, N),
            (X >= N -> % Si la nota es mayor o igual a la de corte
@@ -54,14 +54,13 @@ nota(X) :-
            ; 
                true
            )).
-% El forall itera sobre todas las carreras y notas de corte
-% Ponemos el true para que no haya un fallo si no se cumple la condición
-
+% El forall itera sobre todas las carreras y notas de corte.
+% Ponemos el true para que no haya un fallo si no se cumple la condición.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Esto es por el tipo de bachillerato
+% Esto es por el tipo de bachillerato.
 
-% cada tipo de bachillerato es un conjunto representado como una lista
-% Estos conjuntos no son disjuntos. Tienen elementos en común
+% cada tipo de bachillerato es un conjunto representado como una lista.
+% Estos conjuntos no son disjuntos. Tienen elementos en común.
 % Si haces 2 tipos de bachillerato las carreras en común contarán el doble
 bachilleratoCiencias(["Medicina", "Matemáticas", "Física", "Psicología", "Enfermería", "Biología", "Ciencias de la Actividad Física y del Deporte", "Química", "Ciencia y Tecnología de los Alimentos", "Ciencias del mar", "Economía", "Arquitectura"]).
 bachilleratoTech(["Matemáticas", "Física", "Ingeniería Aeroespacial", "Ingeniería Informática", "Ingeniería Mecánica", "Arquitectura"]).
@@ -76,20 +75,36 @@ bachillerato("Artes") :- bachilleratoArtes(C), forall(member(X, C), add_pair(X, 
 bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pair(X, 2)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A más idiomas, darles más puntos.
+% La cantidad de idiomas que habla el usuario.
+
+% Las carreras en las que viene bien hablar varios idiomas se guardan en una lista.
+% Si habla más de dos idiomas, le suma un punto a las carreras de dicha lista.
 carreras_de_idiomas(["Filología inglesa", "Ciencias Políticas y de la Administración", "Turismo", "Filología Hispánica"]).
 idiomas(X) :-
     X > 2, carreras_de_idiomas(L), forall(member(C, L), add_pair(C, 1)), !.
 idiomas(_) :- true.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aquí tenemos en cuenta el afán de realizar problemas matemáticos del usuario.
+
+% Si tiene dicho afán, le sumamos 3 puntos a Matemáticas y Física, puesto que estas carreras se centran en resolver problemas.
+% Se le suma un punto a Ingenría Mecánica y Química porque también hay problemas, pero menos.
 resolver_problemas :- 
     add_pair("Matemáticas", 3), add_pair("Física", 3), add_pair("Ingenería Mecánica", 1), add_pair("Química", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-curiosidad_tecnologica :- add_pair("Ingenería Mecánica", 1), add_pair("Ingenería Informática").
+% Con esta regla se atiende a la pregunta de si al usuario le interesa saber cómo funciona la tecnología de uso diario.
+
+% Le sumamos un punto a las ingerías.
+curiosidad_tecnologica :- add_pair("Ingenería Mecánica", 1), add_pair("Ingenería Informática", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Queremos ver el gusto por la lectura del usuario.
+
+% En una lista almacenamos las carreras en las que tendrá que leer varios libros.
+% Si lee 3 o más libros al mes, le sumamos 2 puntos a estas carreras.
+% De 1 a 2 libros al mes, un punto sólo.
+% Cero libros, nada. Devuelve true, para que si lee ceros libros prolog no devuelva false.
 carreras_de_leer(["Filología Hispánica", "Filología Inglesa", "Filosofía"]).
 libros_al_mes(X) :- 
     X>2, carreras_de_leer(L), forall(member(C, L), add_pair(C, 2)), !.
@@ -98,31 +113,57 @@ libros_al_mes(X) :-
 libros_al_mes(_) :- true.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Atendemos a la memoria que tiene el usuario.
+
+% Como en otras reglas, guardamos en una lista las carreras para las que se necesita una buena memoria.
+% Por lo tanto, si tiene buena memoria, se le añade un punto a estas carreras.
+% Si es regular, no hace nada. (true para que no salga false por terminal).
+% Si es mala, dado que no sería recomendable que vaya a estas carreras, se les resta un punto.
 carreras_de_memorizar(["Historia del Arte", "Historia", "Derecho", "Medicina", "Filosofía"]).
 memoria("buena") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, 1)).
 memoria("regular") :- true.
 memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Con estas reglas vamos a darle valores a todas las carreras dependiendo del tiempo para estudiar que tiene el individuo.
+
+% Separamos todas las carreas en cinco listas disjuntas según el tiempo que creemos que necesitaría una persona media para aprobar.
+% Van de menos tiempo necesario a más.
+
 carreras_faciles(["Educación Infantil",  "Turismos", "Diseño", "Educación Social"]).
 carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar"]).
 carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
 carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", 
     "Arquitectura", "Química", "Relaciones Internacionales"]).
 carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"]).
+
+% La primera regla de tiempo de estudio atiende a quien tiene menos de una hora de estudio. Como tiene poco tiempo se le da tres puntos
+% a las "faciles", pues creemos que el tiempo es un factor de peso. A las medio faciles aunque no serían tan recomendables, puede llegar a sacarlas,
+% entonces se le da un punto. Al final se añade un corte para que no vaya al resto de reglas, 
+% dado que cero cumple la condición de este regla y las dos seguientes.
 tiempo_estudio(X) :- 
     X<1, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 3)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
+
+% La siguiente regla de tiempo de estudio es para si tiene entre 1 y 2 horas diarias.
 tiempo_estudio(X) :- 
     X<3, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 2)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 3)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, -1)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -3)), !.
+
+% Después entre 3 y 4 horas.
 tiempo_estudio(X) :- 
     X<5, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, 1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 2)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 3)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, -1)), !.
+
+% La últimas, más de cinco horas.
 tiempo_estudio(X) :- 
     X>4, carreras_faciles(L1), forall(member(C1, L1), add_pair(C1, -1)), carreras_medio_facil(L2), forall(member(C2, L2), add_pair(C2, 1)),
     carreras_medio_dificl(L3), forall(member(C3, L3), add_pair(C3, 2)), carreras_dificiles(L4), forall(member(C4, L4), add_pair(C4, 3)), !.
+
+% Al final se ejecuta una sóla regla que le dará unos valores a cada tipo de carrera dependiendo del tiempo que tengas y nuestro criterio subjetivo.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 carreras_frente_publico(["Psicología", "Educación Infantil", "Turismo", "Medicina", "Enfermería", "Comunicaciones y Periodismo",
     "Educación Social", "Relaciones Internacionales", "Ciencias de la Actividad Física y del Deporte"]).
 publico :- carreras_frente_publico(L), forall(member(C, L), add_pair(C, 1)).
