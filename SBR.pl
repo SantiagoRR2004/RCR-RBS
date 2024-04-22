@@ -224,10 +224,15 @@ profesor :- carreras_de_educacion(L), forall(member(C, L), add_pair(C, 1)), add_
 carreras_de_actualidad(["Economía", "Filosofía", "Comunicaciones y Periodismo", "Ciencias Políticas y de la Administración"]).
 informado :- carreras_de_actualidad(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Si estás interesado en cuidar tu salud, tal vez te interese estas carreras.
+
+% Le damos un punto a las carreras relacionadas con el deporte y la alimentación.
 sano :- add_pair("Ciencias de la Actividad Física y del Deporte", 1), add_pair("Ciencia y Tecnología de los Alimentos", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Un punto a carreras en las no tengas que relacionarte con nadie, un historiador o artista solitario.
 independiente :- add_pair("Bellas Artes", 1), add_pair("Hisotria", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Carreras en las que realizas experimentos en un laboratorio.
 carreras_de_laboratorio(["Física", "Química", "Biología"]).
 investigador :- carreras_de_laboratorio(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
