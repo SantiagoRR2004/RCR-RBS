@@ -130,7 +130,7 @@ memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1
 % Separamos todas las carreas en cinco listas disjuntas según el tiempo que creemos que necesitaría una persona media para aprobar.
 % Van de menos tiempo necesario a más.
 
-carreras_faciles(["Educación Infantil",  "Turismos", "Diseño", "Educación Social"]).
+carreras_faciles(["Educación Infantil",  "Turismo", "Diseño", "Educación Social"]).
 carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar"]).
 carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
 carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", 
@@ -163,35 +163,66 @@ tiempo_estudio(X) :-
 % Al final se ejecuta una sóla regla que le dará unos valores a cada tipo de carrera dependiendo del tiempo que tengas y nuestro criterio subjetivo.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Miramos si el usuario podría trabajar en un futuro atendiendo a personas.
 
+% En las carreras cuyo trabajo la persona interactúe con personas, se almacenan en una lista
+% Si es apto, el usuario escribe publico. se recorre la lista con el forall y se le añade un punto a estas carreras.
 carreras_frente_publico(["Psicología", "Educación Infantil", "Turismo", "Medicina", "Enfermería", "Comunicaciones y Periodismo",
     "Educación Social", "Relaciones Internacionales", "Ciencias de la Actividad Física y del Deporte"]).
 publico :- carreras_frente_publico(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aquí no solo si puede trabajar con público, sino también si le gusta ayudar.
+
+% Una vez más, se almacenan dichas carreras en las que en un futuro ayudas a gente.
+% Se recorre la lista y se añade un punto a las carreras de ayudar.
 carreras_de_ayudar(["Psicología", "Educación Infantil", "Medicina", "Enfermería", "Educación Social","Ciencias de la Actividad Física y del Deporte"]).
 ayudar :- carreras_de_ayudar(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Este apartado está orientado a probar si se tiene facilidad para el arte, que aprecia la belleza.
+
+% Se almacenan carreras de arte en la lista y se les da un punto, si el usuario aprecia la belleza.
 carreras_de_apreciar_belleza(["Bellas Artes", "Historia del Arte", "Diseño"]).
 belleza :- carreras_de_apreciar_belleza(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Si el usuario tiene imaginación se le da un punto a estas tres carreras.
+
+% Es necesaria la imaginación para hacer algo artístico o imaginar una estructura 3D apartir de un plano 2D (Arquitectura)
 carreras_de_imaginacion(["Bellas Artes", "Diseño", "Arquitectura"]).
 imaginativo :- carreras_de_imaginacion(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-carreras_de_empatia(["Psicología", "Educación Infantil", "Enfermería", "Educación Social"]).
+% Para ciertas carreras se necesita poder empatizar y comprender los sentimientos del otro con el fin de poderlo orientarlo.
+
+% Por ello se les da un punto a las carreras en las que tienes la responsabilidad de atender y orientar a alguien
+carreras_de_empatia(["Psicología", "Educación Infantil", "Educación Social"]).
 empatico :- carreras_de_empatia(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-carreras_de_debate(["Economía", "Filosofía", "Comunicaciones y Periodismo", "Ciencias Políticas y de la Administración"]).
+% Observar si la persona podría debatir y defender sus ideas.
+
+% En estas carreras la mejor forma de aprender es exponiéndote a las ideas contrarias de los demás
+carreras_de_debate(["Economía", "Filosofía", "Ciencias Políticas y de la Administración"]).
 debatir :- carreras_de_debate(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-carreras_de_ambicion(["Matemáticas", "Administración y Dirección de Empresas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Ciencias Políticas y de la Administración"]).
+% En este apartado se valora la ambición
+
+% Aquí tenemos carreras que la gente asocia a personas reputadas en la sociedad:
+% Matemáticos, empresarios, abogados, médicos, políticos e ingenieros.
+carreras_de_ambicion(["Matemáticas", "Administración y Dirección de Empresas", "Derecho", "Medicina", 
+    "Ingenería Aeroespacial", "Ciencias Políticas y de la Administración"]).
 ambicioso :- carreras_de_ambicion(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Muchos estudiantes en su tiempo libre dan clases particulares para ganar dinero.
+% Esto puede ser buena referencia para orientarlos en su futuro.
+
+% Sumamos un punto a las carreras con las que puedes ser profesor.
 carreras_de_educacion(["Matemáticas", "Físisca", "Educación Infantil", "Filología Hispánica", "Filología Inglesa", "Historia",
     "Economía", "Química", "Educación Social", "Filosofía", "Biología"]).
 profesor :- carreras_de_educacion(L), forall(member(C, L), add_pair(C, 1)), add_pair("Educación Infantil", 1), add_pair("Educación Social", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algunas carreras te obligan a mantenerte informado de la actualidad económica y política.
+
+% Si el usuario ya tiene la costumbre de informarse, se le suma un punto a estas carreras.
 carreras_de_actualidad(["Economía", "Filosofía", "Comunicaciones y Periodismo", "Ciencias Políticas y de la Administración"]).
-informado :- carreras_de_actualidad(L), forall(member(C, L), add_pair(C, 1)), add_pair("Educación Infantil", 1), add_pair("Educación Social", 1).
+informado :- carreras_de_actualidad(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sano :- add_pair("Ciencias de la Actividad Física y del Deporte", 1), add_pair("Ciencia y Tecnología de los Alimentos", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
