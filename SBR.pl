@@ -88,15 +88,15 @@ idiomas(_) :- true.
 % Aquí tenemos en cuenta el afán de realizar problemas matemáticos del usuario.
 
 % Si tiene dicho afán, le sumamos 3 puntos a Matemáticas y Física, puesto que estas carreras se centran en resolver problemas.
-% Se le suma un punto a Ingenría Mecánica y Química porque también hay problemas, pero menos.
+% Se le suma un punto a Ingeniería Mecánica y Química porque también hay problemas, pero menos.
 resolver_problemas :- 
-    add_pair("Matemáticas", 3), add_pair("Física", 3), add_pair("Ingenería Mecánica", 1), add_pair("Química", 1).
+    add_pair("Matemáticas", 3), add_pair("Física", 3), add_pair("Ingeniería Mecánica", 1), add_pair("Química", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Con esta regla se atiende a la pregunta de si al usuario le interesa saber cómo funciona la tecnología de uso diario.
 
 % Le sumamos un punto a las ingerías.
-curiosidad_tecnologica :- add_pair("Ingenería Mecánica", 1), add_pair("Ingenería Informática", 1).
+curiosidad_tecnologica :- add_pair("Ingeniería Mecánica", 1), add_pair("Ingeniería Informática", 1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Queremos ver el gusto por la lectura del usuario.
@@ -133,9 +133,9 @@ memoria("mala") :- carreras_de_memorizar(L), forall(member(C, L), add_pair(C, -1
 carreras_faciles(["Educación Infantil",  "Turismo", "Diseño", "Educación Social"]).
 carreras_medio_facil(["Administración y Dirección de Empresas", "Psicología", "Bellas Artes", "Ciencias del mar"]).
 carreras_medio(["Filología Hispánica", "Historia del Arte", "Ciencias Políticas y de la Administración", "Economía", "Ciencia y Tecnología de los Alimentos"]).
-carreras_medio_dificl(["Ingenería Informática", "Filología Inglesa", "Ingenería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", 
+carreras_medio_dificl(["Ingeniería Informática", "Filología Inglesa", "Ingeniería Mecánica", "Historia", "Enfermería", "Comunicaciones y Periodismo", 
     "Arquitectura", "Química", "Relaciones Internacionales"]).
-carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingenería Aeroespacial", "Biología", "Filosofía"]).
+carreras_dificiles(["Física", "Matemáticas", "Derecho", "Medicina", "Ingeniería Aeroespacial", "Biología", "Filosofía"]).
 
 % La primera regla de tiempo de estudio atiende a quien tiene menos de una hora de estudio. Como tiene poco tiempo se le da tres puntos
 % a las "faciles", pues creemos que el tiempo es un factor de peso. A las medio faciles aunque no serían tan recomendables, puede llegar a sacarlas,
@@ -207,7 +207,7 @@ debatir :- carreras_de_debate(L), forall(member(C, L), add_pair(C, 1)).
 % Aquí tenemos carreras que la gente asocia a personas reputadas en la sociedad:
 % Matemáticos, empresarios, abogados, médicos, políticos e ingenieros.
 carreras_de_ambicion(["Matemáticas", "Administración y Dirección de Empresas", "Derecho", "Medicina", 
-    "Ingenería Aeroespacial", "Ciencias Políticas y de la Administración"]).
+    "Ingeniería Aeroespacial", "Ciencias Políticas y de la Administración"]).
 ambicioso :- carreras_de_ambicion(L), forall(member(C, L), add_pair(C, 1)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Muchos estudiantes en su tiempo libre dan clases particulares para ganar dinero.
