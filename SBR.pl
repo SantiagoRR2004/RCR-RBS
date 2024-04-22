@@ -297,3 +297,13 @@ printPairs([pair(Key, Value) | Tail]) :-
 final :- obtain_list(L), quicksort(L,R), printPairs(R), !.
 % Hay un corte para evitar el backtracking
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aquí eliminamos todas las parejas de la base de conocimiento
+
+% retractall es un predicado que se utiliza para eliminar todas las instancias de un término que satisfacen un objetivo dado.
+clear :- retractall(pair(_, _)). % Esto es para limpiar la base de conocimiento
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Con esto le damos al usuario el enlace a la documentación
+:- initialization(writef("Si tiene dudas de como usar este programa vaya a https://docs.google.com/document/d/1axm2lGASmsO0FkgP_LuOzZrzYhXfqFnB4rMcRrYaIo8/edit?usp=sharing")).
+% initialization es un predicado que se ejecuta al inicio del programa
