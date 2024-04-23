@@ -79,7 +79,7 @@ bachillerato("Sociales") :- bachilleratoSociales(C), forall(member(X, C), add_pa
 
 % Las carreras en las que viene bien hablar varios idiomas se guardan en una lista.
 % Si habla más de dos idiomas, le suma un punto a las carreras de dicha lista.
-carreras_de_idiomas(["Filología inglesa", "Ciencias Políticas y de la Administración", "Turismo", "Filología Hispánica"]).
+carreras_de_idiomas(["Filología Inglesa", "Ciencias Políticas y de la Administración", "Turismo", "Filología Hispánica"]).
 idiomas(X) :-
     X > 2, carreras_de_idiomas(L), forall(member(C, L), add_pair(C, 1)), !.
 idiomas(_) :- true.
@@ -214,7 +214,7 @@ ambicioso :- carreras_de_ambicion(L), forall(member(C, L), add_pair(C, 1)).
 % Esto puede ser buena referencia para orientarlos en su futuro.
 
 % Sumamos un punto a las carreras con las que puedes ser profesor.
-carreras_de_educacion(["Matemáticas", "Físisca", "Educación Infantil", "Filología Hispánica", "Filología Inglesa", "Historia",
+carreras_de_educacion(["Matemáticas", "Física", "Educación Infantil", "Filología Hispánica", "Filología Inglesa", "Historia",
     "Economía", "Química", "Educación Social", "Filosofía", "Biología"]).
 profesor :- carreras_de_educacion(L), forall(member(C, L), add_pair(C, 1)), add_pair("Educación Infantil", 1), add_pair("Educación Social", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,7 +230,7 @@ informado :- carreras_de_actualidad(L), forall(member(C, L), add_pair(C, 1)).
 sano :- add_pair("Ciencias de la Actividad Física y del Deporte", 1), add_pair("Ciencia y Tecnología de los Alimentos", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Un punto a carreras en las no tengas que relacionarte con nadie, un historiador o artista solitario.
-independiente :- add_pair("Bellas Artes", 1), add_pair("Hisotria", 1).
+independiente :- add_pair("Bellas Artes", 1), add_pair("Historia", 1).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Carreras en las que realizas experimentos en un laboratorio.
 carreras_de_laboratorio(["Física", "Química", "Biología"]).
