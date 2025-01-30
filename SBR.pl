@@ -246,9 +246,9 @@ add_pair(Key, Value) :-
 
 % Ya se le ha dado a la carrera un valor y le sumamos el nuevo
 add_pair(Key, Value) :-
-pair(Key, OldValue), % Obtenemos el valor antiguo
-NewValue is OldValue + Value, % Sumamos el nuevo valor
-retract(pair(Key, OldValue)), % Eliminas la antigua
+    pair(Key, OldValue), % Obtenemos el valor antiguo
+    NewValue is OldValue + Value, % Sumamos el nuevo valor
+    retract(pair(Key, OldValue)), % Eliminas la antigua
     assert(pair(Key, NewValue)).  % Añades la nueva
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
