@@ -246,9 +246,9 @@ add_pair(Key, Value) :-
 
 % Ya se le ha dado a la carrera un valor y le sumamos el nuevo
 add_pair(Key, Value) :-
-    pair(Key, OldValue), % Obtenemos el valor antiguo
-    NewValue is OldValue + Value, % Sumamos el nuevo valor
-    retract(pair(Key, OldValue)), % Eliminas la antigua
+pair(Key, OldValue), % Obtenemos el valor antiguo
+NewValue is OldValue + Value, % Sumamos el nuevo valor
+retract(pair(Key, OldValue)), % Eliminas la antigua
     assert(pair(Key, NewValue)).  % Añades la nueva
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -310,5 +310,5 @@ clear :- retractall(pair(_, _)). % Esto es para limpiar la base de conocimiento
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Con esto le damos al usuario el enlace a la documentación
-:- initialization(writef("Si tiene dudas de como usar este programa vaya a https://docs.google.com/document/d/1axm2lGASmsO0FkgP_LuOzZrzYhXfqFnB4rMcRrYaIo8/edit?usp=sharing")).
+:- initialization(writef("Si tiene dudas de como usar este programa vaya a https://docs.google.com/document/d/1fYjPJnBXXabiXbtqP8fNKxdZ-X9CXQ14PZGefzGl370")).
 % initialization es un predicado que se ejecuta al inicio del programa
