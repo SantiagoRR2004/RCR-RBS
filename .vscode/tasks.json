@@ -11,6 +11,24 @@
                 "isDefault": true
             },
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Install Prolog Extension",
+            "type": "shell",
+            "command": "code --install-extension AmauryRabouan.new-vsc-prolog",
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            },
+            "presentation": {
+              "reveal": "silent",
+              "focus": false,
+              "panel": "new"
+            },
+            "runOptions": {
+              "runOn": "folderOpen" // Run this task when the folder is opened
+            },
+            "problemMatcher": []
+        },
     ]
 }
